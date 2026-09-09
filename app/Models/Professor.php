@@ -5,16 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Aluno extends Model
+class Professor extends Model
 {
+    protected $table = 'professores';
+
     protected $fillable = [
         'nome',
-        'idade',
-        'telefone',
     ];
-
-    public function matriculas(): HasMany
-    {
-    return $this->hasMany(Matricula::class);
-    }
+    public function turmas(): HasMany
+        {
+            return $this->hasMany(Turma::class);
+        }
 }
