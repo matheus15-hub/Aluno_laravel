@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('matriculas', function (Blueprint $table) {
             $table->id();
+            $table->decimal('nota', 5, 2);
             $table->timestamps();
         });
     }

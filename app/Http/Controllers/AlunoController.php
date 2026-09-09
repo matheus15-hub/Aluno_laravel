@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Aluno;
 use Illuminate\Http\Request;
 
 class AlunoController extends Controller
@@ -11,6 +12,30 @@ class AlunoController extends Controller
     {
         return 'Lista de alunos';
     }
+    public function alunosPorCurso()
+    {
+        $alunos = Aluno::select('alunos.*')
+            ->join('matriculas', 'matriculas.aluno_id', '=', 'alunos.id')
+            ->join('turmas', 'turmas.id', '=', 'matriculas.turma_id')
+            ->join('cursos', 'cursos.id', '=', 'turmas.curso_id')
+            ->where('cursos.nome', 'Sistemas de Informação')
+            ->get();
+
+        return $alunos;
+    }
+    public function alunosPorNome()
+        {
+            $alunos = Aluno::where('nome', 'like', '%silva%')->get();
+
+            return $alunos;
+        }
+    
+    public function quantidadeAlunos()
+        {
+            $quantidade = Aluno::count();
+
+            return $quantidade;
+        }
 
 
     public function show($id)
