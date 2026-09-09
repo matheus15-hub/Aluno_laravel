@@ -11,11 +11,7 @@
     <header>
         <h1>Sistema de Alunos</h1>
 
-        <nav>
-            <a href="/alunos">Alunos</a>
-            <a href="/sobre">Sobre</a>
-            <a href="/contato">Contato</a>
-        </nav>
+        @include('partials.menu')
     </header>
 
     <main>
