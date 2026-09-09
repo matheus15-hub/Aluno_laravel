@@ -7,68 +7,66 @@ use Illuminate\Http\Request;
 
 class AlunoController extends Controller
 {
-    // Listar todos os alunos
+  
     public function index()
     {
-        return 'Lista de alunos';
+        $alunos = Aluno::all();
+
+        return view('alunos.index', compact('alunos'));
     }
-    public function alunosPorCurso()
-    {
-        $alunos = Aluno::select('alunos.*')
-            ->join('matriculas', 'matriculas.aluno_id', '=', 'alunos.id')
-            ->join('turmas', 'turmas.id', '=', 'matriculas.turma_id')
-            ->join('cursos', 'cursos.id', '=', 'turmas.curso_id')
-            ->where('cursos.nome', 'Sistemas de Informação')
-            ->get();
-
-        return $alunos;
-    }
-    public function alunosPorNome()
-        {
-            $alunos = Aluno::where('nome', 'like', '%silva%')->get();
-
-            return $alunos;
-        }
-    
-    public function quantidadeAlunos()
-        {
-            $quantidade = Aluno::count();
-
-            return $quantidade;
-        }
-
 
     public function show($id)
     {
-        return 'Aluno: ' . $id;
+        $aluno = Aluno::findOrFail($id);
+
+        return view('alunos.show', compact('aluno'));
     }
 
-   
+
     public function create()
     {
-        return 'Formulário para criar aluno';
+        return view('alunos.create');
     }
 
     public function store(Request $request)
     {
-        return 'Aluno criado';
-    }
+        Aluno::create([
+            'nome' => $request->nome,
+            'idade' => $request->idade,
+            'telefone' => $request->telefone,
+        ]);
 
+        return redirect()->route('alunos.index');
+    }
 
     public function edit($id)
     {
-        return 'Formulário para editar aluno: ' . $id;
+        $aluno = Aluno::findOrFail($id);
+
+        return view('alunos.edit', compact('aluno'));
     }
 
-
+  
     public function update(Request $request, $id)
     {
-        return 'Aluno atualizado: ' . $id;
+        $aluno = Aluno::findOrFail($id);
+
+        $aluno->update([
+            'nome' => $request->nome,
+            'idade' => $request->idade,
+            'telefone' => $request->telefone,
+        ]);
+
+        return redirect()->route('alunos.index');
     }
 
+  
     public function destroy($id)
     {
-        return 'Aluno excluído: ' . $id;
-    }
+        $aluno = Aluno::findOrFail($id);
 
+        $aluno->delete();
+
+        return redirect()->route('alunos.index');
+    }
 }
