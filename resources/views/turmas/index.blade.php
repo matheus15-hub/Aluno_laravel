@@ -4,19 +4,6 @@
 
 @section('content')
 
-    public function index()
-        {
-            if (Auth::user()->role === 'admin') {
-                $turmas = Turma::with('curso')->get();
-            } else {
-                $turmas = Turma::with('curso')
-                    ->where('user_id', Auth::id())
-                    ->get();
-            }
-
-            return view('turmas.index', compact('turmas'));
-        }
-
     <h2>Minhas Turmas</h2>
 
     @if($turmas->count() > 0)

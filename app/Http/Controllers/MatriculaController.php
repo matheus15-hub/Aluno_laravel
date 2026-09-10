@@ -12,7 +12,10 @@ class MatriculaController extends Controller
     {
         $matricula = Matricula::with('turma')->findOrFail($id);
 
-        if ($matricula->turma->user_id !== Auth::id()) {
+        $isDono = $matricula->turma->user_id === Auth::id();
+        $isAdmin = Auth::user()->role === 'admin';
+
+        if (! $isDono && ! $isAdmin) {
             abort(403);
         }
 

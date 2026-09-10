@@ -14,8 +14,8 @@ class AlunoPolicy
 
     public function update(User $user, Aluno $aluno): bool
     {
-        return $user->role === 'admin'
-            || $user->role === 'professor';
+   
+        return $user->role === 'admin';
     }
 
     public function delete(User $user, Aluno $aluno): bool

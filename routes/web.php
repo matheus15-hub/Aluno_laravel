@@ -15,24 +15,19 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 
-
-
 Route::middleware(['auth', 'role:admin'])->group(function () {
-
     Route::get('/admin', function () {
         return 'Área do administrador';
     })->name('admin');
-
 });
 
-
-
-
 Route::middleware(['auth', 'role:professor'])->group(function () {
-
     Route::get('/professor', function () {
         return 'Área do professor';
     })->name('professor');
+});
+
+Route::middleware('auth')->group(function () {
 
     Route::get('/turmas', [TurmaController::class, 'index'])
         ->name('turmas.index');
@@ -43,12 +38,7 @@ Route::middleware(['auth', 'role:professor'])->group(function () {
     Route::put('/matriculas/{id}', [MatriculaController::class, 'update'])
         ->name('matriculas.update');
 
-});
-
-Route::resource('/alunos', AlunoController::class);
-
-
-Route::middleware('auth')->group(function () {
+    Route::resource('/alunos', AlunoController::class);
 
     Route::get('/profile', [ProfileController::class, 'edit'])
         ->name('profile.edit');
@@ -60,6 +50,5 @@ Route::middleware('auth')->group(function () {
         ->name('profile.destroy');
 
 });
-
 
 require __DIR__.'/auth.php';
