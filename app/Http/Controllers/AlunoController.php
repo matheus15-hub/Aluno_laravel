@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AlunoRequest;
 use App\Models\Aluno;
-use Illuminate\Http\Request;
 
 class AlunoController extends Controller
 {
-  
+
     public function index()
     {
         $alunos = Aluno::all();
@@ -28,7 +28,8 @@ class AlunoController extends Controller
         return view('alunos.create');
     }
 
-    public function store(Request $request)
+  
+    public function store(AlunoRequest $request)
     {
         Aluno::create([
             'nome' => $request->nome,
@@ -39,6 +40,7 @@ class AlunoController extends Controller
         return redirect()->route('alunos.index');
     }
 
+
     public function edit($id)
     {
         $aluno = Aluno::findOrFail($id);
@@ -46,8 +48,7 @@ class AlunoController extends Controller
         return view('alunos.edit', compact('aluno'));
     }
 
-  
-    public function update(Request $request, $id)
+    public function update(AlunoRequest $request, $id)
     {
         $aluno = Aluno::findOrFail($id);
 
@@ -60,7 +61,7 @@ class AlunoController extends Controller
         return redirect()->route('alunos.index');
     }
 
-  
+
     public function destroy($id)
     {
         $aluno = Aluno::findOrFail($id);

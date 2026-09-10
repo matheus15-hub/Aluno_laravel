@@ -6,15 +6,15 @@
 
     <h2>Lista de Alunos</h2>
 
-    @php
-        $alunos = [];
-    @endphp
-
     @if(count($alunos) > 0)
 
         <ul>
             @foreach($alunos as $aluno)
-                <li>{{ $aluno }}</li>
+                <li>
+                    Nome: {{ $aluno->nome }} |
+                    Idade: {{ $aluno->idade }} |
+                    Telefone: {{ $aluno->telefone }}
+                </li>
             @endforeach
         </ul>
 
