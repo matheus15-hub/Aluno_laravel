@@ -1,32 +1,65 @@
 <?php
 
 use App\Http\Controllers\AlunoController;
+use App\Http\Controllers\MatriculaController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TurmaController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/sobre', function () {
-    return 'Página sobre';
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+
+
+
+Route::middleware(['auth', 'role:admin'])->group(function () {
+
+    Route::get('/admin', function () {
+        return 'Área do administrador';
+    })->name('admin');
+
 });
 
-Route::get('/contato', function () {
-    return 'Página de contato';
-});
 
-Route::get('/produto/{id}', function ($id) {
-    return 'Produto: ' . $id;
-});
 
-Route::get('/categoria/{id}', function ($id) {
-    return 'Categoria: ' . $id;
-});
 
-Route::get('/usuario/{id}', function ($id) {
-    return 'Usuário: ' . $id;
-});
+Route::middleware(['auth', 'role:professor'])->group(function () {
 
-Route::get('/turma/{id}/alunos', [AlunoController::class, 'alunosDaTurma']);
+    Route::get('/professor', function () {
+        return 'Área do professor';
+    })->name('professor');
+
+    Route::get('/turmas', [TurmaController::class, 'index'])
+        ->name('turmas.index');
+
+    Route::get('/turmas/{id}/alunos', [TurmaController::class, 'alunos'])
+        ->name('turmas.alunos');
+
+    Route::put('/matriculas/{id}', [MatriculaController::class, 'update'])
+        ->name('matriculas.update');
+
+});
 
 Route::resource('/alunos', AlunoController::class);
+
+
+Route::middleware('auth')->group(function () {
+
+    Route::get('/profile', [ProfileController::class, 'edit'])
+        ->name('profile.edit');
+
+    Route::patch('/profile', [ProfileController::class, 'update'])
+        ->name('profile.update');
+
+    Route::delete('/profile', [ProfileController::class, 'destroy'])
+        ->name('profile.destroy');
+
+});
+
+
+require __DIR__.'/auth.php';

@@ -11,8 +11,14 @@
 
         <div>
             <label for="nome">Nome:</label>
-            <input type="text" id="nome" name="nome">
-             @error('nome')
+            <input
+                type="text"
+                id="nome"
+                name="nome"
+                value="{{ old('nome') }}"
+            >
+
+            @error('nome')
                 <p>{{ $message }}</p>
             @enderror
         </div>
@@ -21,8 +27,14 @@
 
         <div>
             <label for="idade">Idade:</label>
-            <input type="number" id="idade" name="idade">
-             @error('idade')
+            <input
+                type="number"
+                id="idade"
+                name="idade"
+                value="{{ old('idade') }}"
+            >
+
+            @error('idade')
                 <p>{{ $message }}</p>
             @enderror
         </div>
@@ -31,15 +43,46 @@
 
         <div>
             <label for="telefone">Telefone:</label>
-            <input type="text" id="telefone" name="telefone">
+            <input
+                type="text"
+                id="telefone"
+                name="telefone"
+                value="{{ old('telefone') }}"
+            >
+
             @error('telefone')
                 <p>{{ $message }}</p>
             @enderror
         </div>
 
         <br>
-    
-        <button type="submit">Cadastrar</button>
+
+        <div>
+            <label for="turma_id">Turma:</label>
+
+            <select id="turma_id" name="turma_id">
+                <option value="">Selecione uma turma</option>
+
+                @foreach($turmas as $turma)
+                    <option
+                        value="{{ $turma->id }}"
+                        {{ old('turma_id') == $turma->id ? 'selected' : '' }}
+                    >
+                        {{ $turma->nome }}
+                    </option>
+                @endforeach
+            </select>
+
+            @error('turma_id')
+                <p>{{ $message }}</p>
+            @enderror
+        </div>
+
+        <br>
+
+        <button type="submit">
+            Cadastrar
+        </button>
     </form>
 
 @endsection

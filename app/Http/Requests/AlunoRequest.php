@@ -17,6 +17,7 @@ class AlunoRequest extends FormRequest
             'nome' => 'required|string|min:3|max:100',
             'idade' => 'required|integer|min:16|max:100',
             'telefone' => 'required|string|min:10|max:15',
+            'turma_id' => 'required|exists:turmas,id',
         ];
     }
 
@@ -37,6 +38,9 @@ class AlunoRequest extends FormRequest
             'telefone.string' => 'O telefone deve ser informado como texto.',
             'telefone.min' => 'O telefone deve ter pelo menos 10 caracteres.',
             'telefone.max' => 'O telefone pode ter no máximo 15 caracteres.',
+
+            'turma_id.required' => 'A turma é obrigatória.',
+            'turma_id.exists' => 'A turma selecionada não existe.',
         ];
     }
 }

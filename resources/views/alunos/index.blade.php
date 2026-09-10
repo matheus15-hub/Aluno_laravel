@@ -11,9 +11,12 @@
         <ul>
             @foreach($alunos as $aluno)
                 <li>
-                    Nome: {{ $aluno->nome }} |
-                    Idade: {{ $aluno->idade }} |
-                    Telefone: {{ $aluno->telefone }}
+                    {{ $aluno->nome }} -
+                    {{ $aluno->idade }} anos
+
+                    <a href="{{ route('alunos.show', $aluno->id) }}">
+                        Ver
+                    </a>
                 </li>
             @endforeach
         </ul>

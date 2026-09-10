@@ -4,12 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\AlunoRequest;
 use App\Models\Aluno;
+use App\Models\Matricula;
 use App\Models\Turma;
+use Illuminate\Support\Facades\Gate;
 
 class AlunoController extends Controller
 {
-
-    
     public function index()
     {
         $alunos = Aluno::all();
@@ -17,12 +17,6 @@ class AlunoController extends Controller
         return view('alunos.index', compact('alunos'));
     }
 
-     public function alunosDaTurma($id)
-        {
-            $turma = Turma::with('matriculas.aluno')->findOrFail($id);
-
-            return view('alunos.turma', compact('turma'));
-        }
     public function show($id)
     {
         $aluno = Aluno::findOrFail($id);
@@ -30,28 +24,39 @@ class AlunoController extends Controller
         return view('alunos.show', compact('aluno'));
     }
 
-
     public function create()
-    {
-        return view('alunos.create');
-    }
+        {
+            Gate::authorize('create', Aluno::class);
 
-  
+            $turmas = Turma::with('curso')->get();
+
+            return view('alunos.create', compact('turmas'));
+        }
+
     public function store(AlunoRequest $request)
-    {
-        Aluno::create([
-            'nome' => $request->nome,
-            'idade' => $request->idade,
-            'telefone' => $request->telefone,
-        ]);
+{
+            Gate::authorize('create', Aluno::class);
 
-        return redirect()->route('alunos.index');
-    }
+            $aluno = Aluno::create([
+                'nome' => $request->nome,
+                'idade' => $request->idade,
+                'telefone' => $request->telefone,
+            ]);
 
+            Matricula::create([
+                'aluno_id' => $aluno->id,
+                'turma_id' => $request->turma_id,
+                'nota' => 0,
+            ]);
+
+            return redirect()->route('alunos.index');
+        }
 
     public function edit($id)
     {
         $aluno = Aluno::findOrFail($id);
+
+        Gate::authorize('update', $aluno);
 
         return view('alunos.edit', compact('aluno'));
     }
@@ -59,6 +64,8 @@ class AlunoController extends Controller
     public function update(AlunoRequest $request, $id)
     {
         $aluno = Aluno::findOrFail($id);
+
+        Gate::authorize('update', $aluno);
 
         $aluno->update([
             'nome' => $request->nome,
@@ -69,10 +76,11 @@ class AlunoController extends Controller
         return redirect()->route('alunos.index');
     }
 
-
     public function destroy($id)
     {
         $aluno = Aluno::findOrFail($id);
+
+        Gate::authorize('delete', $aluno);
 
         $aluno->delete();
 

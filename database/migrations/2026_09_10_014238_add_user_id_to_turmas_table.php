@@ -6,26 +6,20 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::table('turmas', function (Blueprint $table) {
-             $table->foreignId('professor_id')
-                ->constrained('professores')
+            $table->foreignId('user_id')
+                ->constrained('users')
                 ->onDelete('cascade');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::table('turmas', function (Blueprint $table) {
-            $table->dropForeign(['professor_id']);
-            $table->dropColumn('professor_id');
+            $table->dropForeign(['user_id']);
+            $table->dropColumn('user_id');
         });
     }
 };

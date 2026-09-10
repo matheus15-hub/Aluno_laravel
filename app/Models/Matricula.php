@@ -13,13 +13,13 @@ class Matricula extends Model
         'nota',
     ];
 
-        public function aluno(): BelongsTo
-        {
-            return $this->belongsTo(Aluno::class);
-        }
+    public function aluno(): BelongsTo
+    {
+        return $this->belongsTo(Aluno::class);
+    }
 
     public function turma(): BelongsTo
-        {
-            return $this->belongsTo(Turma::class);
-        }
+    {
+        return $this->belongsTo(Turma::class);
+    }
 }

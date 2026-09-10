@@ -8,24 +8,26 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Turma extends Model
 {
+    protected $table = 'turmas';
+
     protected $fillable = [
         'nome',
-        'professor_id',
+        'user_id',
         'curso_id',
     ];
 
-        public function professor(): BelongsTo
-        {
-            return $this->belongsTo(Professor::class);
-        }
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 
     public function curso(): BelongsTo
-        {
-            return $this->belongsTo(Curso::class);
-        }
+    {
+        return $this->belongsTo(Curso::class);
+    }
 
     public function matriculas(): HasMany
-        {
-            return $this->hasMany(Matricula::class);
-        }
+    {
+        return $this->hasMany(Matricula::class);
+    }
 }

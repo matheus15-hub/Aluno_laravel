@@ -12,28 +12,18 @@ class TurmaSeeder extends Seeder
         $turmas = [
             [
                 'nome' => 'SI - 1º Semestre',
-                'professor_id' => 1,
+                'user_id' => 1,
                 'curso_id' => 1,
             ],
             [
                 'nome' => 'SI - 2º Semestre',
-                'professor_id' => 2,
+                'user_id' => 2,
                 'curso_id' => 1,
             ],
             [
                 'nome' => 'ES - 1º Semestre',
-                'professor_id' => 3,
+                'user_id' => 3,
                 'curso_id' => 2,
-            ],
-            [
-                'nome' => 'ADS - 1º Semestre',
-                'professor_id' => 4,
-                'curso_id' => 3,
-            ],
-            [
-                'nome' => 'CC - 1º Semestre',
-                'professor_id' => 5,
-                'curso_id' => 4,
             ],
         ];
 
