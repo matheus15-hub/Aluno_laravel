@@ -27,4 +27,6 @@ Route::get('/usuario/{id}', function ($id) {
     return 'Usuário: ' . $id;
 });
 
+Route::get('/turma/{id}/alunos', [AlunoController::class, 'alunosDaTurma']);
+
 Route::resource('/alunos', AlunoController::class);

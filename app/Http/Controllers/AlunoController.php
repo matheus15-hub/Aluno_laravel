@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\AlunoRequest;
 use App\Models\Aluno;
+use App\Models\Turma;
 
 class AlunoController extends Controller
 {
 
+    
     public function index()
     {
         $alunos = Aluno::all();
@@ -15,6 +17,12 @@ class AlunoController extends Controller
         return view('alunos.index', compact('alunos'));
     }
 
+     public function alunosDaTurma($id)
+        {
+            $turma = Turma::with('matriculas.aluno')->findOrFail($id);
+
+            return view('alunos.turma', compact('turma'));
+        }
     public function show($id)
     {
         $aluno = Aluno::findOrFail($id);
